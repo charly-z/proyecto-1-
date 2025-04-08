@@ -52,9 +52,8 @@
 <body>
   <h1>Mini Examen de Verbos en Inglés</h1>
 
-  <!-- Aquí van las 20 preguntas -->
   <div id="quiz">
-    <!-- Preguntas generadas automáticamente -->
+    <!-- Preguntas se generan aquí -->
   </div>
 
   <hr>
@@ -110,7 +109,7 @@
         boton.textContent = opcion;
         boton.onclick = function () {
           const resultado = document.getElementById("resultado" + index);
-          if (!resultado.textContent) { // solo permite responder una vez
+          if (!resultado.textContent) {
             if (opcion === item.correcta) {
               resultado.textContent = "¡Correcto!";
               resultado.style.color = "green";
