@@ -2,273 +2,135 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Mini Quiz de Verbos</title>
+  <title>Examen de Verbos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f6fc;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    p[id^="resultado"] {
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    h2#puntajeFinal {
+      text-align: center;
+      margin-top: 40px;
+      color: #2c3e50;
+    }
+  </style>
 </head>
 <body>
-  <h1>Mini Quiz: Verbos en Inglés</h1>
+  <h1>Mini Examen de Verbos en Inglés</h1>
 
-  <!-- Pregunta 1 -->
-  <p><strong>¿Cómo se dice "correr" en inglés?</strong></p>
-  <button onclick="checkAnswer1('Rin', 'Run')">Rin</button>
-  <button onclick="checkAnswer1('Rak', 'Run')">Rak</button>
-  <button onclick="checkAnswer1('Run', 'Run')">Run</button>
-  <p id="resultado1"></p>
+  <!-- Aquí van las 20 preguntas -->
+  <div id="quiz">
+    <!-- Preguntas generadas automáticamente -->
+  </div>
 
-  <!-- Pregunta 2 -->
-  <p><strong>¿Cómo se dice "saltar" en inglés?</strong></p>
-  <button onclick="checkAnswer2('Slip', 'Jump')">Slip</button>
-  <button onclick="checkAnswer2('Jump', 'Jump')">Jump</button>
-  <button onclick="checkAnswer2('Shake', 'Jump')">Shake</button>
-  <p id="resultado2"></p>
-
-  <!-- Pregunta 3 -->
-  <p><strong>¿Cómo se dice "comer" en inglés?</strong></p>
-  <button onclick="checkAnswer3('Come', 'Eat')">Come</button>
-  <button onclick="checkAnswer3('Eat', 'Eat')">Eat</button>
-  <button onclick="checkAnswer3('Hit', 'Eat')">Hit</button>
-  <p id="resultado3"></p>
-
-  <!-- Pregunta 4 -->
-  <p><strong>¿Cómo se dice "dormir" en inglés?</strong></p>
-  <button onclick="checkAnswer4('Rest', 'Sleep')">Rest</button>
-  <button onclick="checkAnswer4('Sleep', 'Sleep')">Sleep</button>
-  <button onclick="checkAnswer4('Sit', 'Sleep')">Sit</button>
-  <p id="resultado4"></p>
-
-  <!-- Pregunta 5 -->
-  <p><strong>¿Cómo se dice "leer" en inglés?</strong></p>
-  <button onclick="checkAnswer5('Ride', 'Read')">Ride</button>
-  <button onclick="checkAnswer5('Read', 'Read')">Read</button>
-  <button onclick="checkAnswer5('Red', 'Read')">Red</button>
-  <p id="resultado5"></p>
+  <hr>
+  <h2 id="puntajeFinal"></h2>
 
   <script>
-    function checkAnswer1(user, correct) {
-      const r = document.getElementById("resultado1");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
+    let score = 0;
+    let totalPreguntas = 20;
+    let respuestasContestadas = 0;
+
+    function actualizarPuntaje() {
+      respuestasContestadas++;
+      if (respuestasContestadas === totalPreguntas) {
+        document.getElementById("puntajeFinal").textContent =
+          "¡Examen completado! Obtuviste " + score + " de " + totalPreguntas + " respuestas correctas.";
+      }
     }
 
-    function checkAnswer2(user, correct) {
-      const r = document.getElementById("resultado2");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
+    const preguntas = [
+      { pregunta: "¿Cómo se dice 'correr' en inglés?", correcta: "Run", opciones: ["Rin", "Rak", "Run"] },
+      { pregunta: "¿Cómo se dice 'saltar' en inglés?", correcta: "Jump", opciones: ["Slip", "Jump", "Shake"] },
+      { pregunta: "¿Cómo se dice 'comer' en inglés?", correcta: "Eat", opciones: ["Come", "Eat", "Hit"] },
+      { pregunta: "¿Cómo se dice 'dormir' en inglés?", correcta: "Sleep", opciones: ["Rest", "Sleep", "Sit"] },
+      { pregunta: "¿Cómo se dice 'leer' en inglés?", correcta: "Read", opciones: ["Ride", "Read", "Red"] },
+      { pregunta: "¿Cómo se dice 'escribir' en inglés?", correcta: "Write", opciones: ["Erase", "Draw", "Write"] },
+      { pregunta: "¿Cómo se dice 'hablar' en inglés?", correcta: "Speak", opciones: ["Talk", "Speak", "Say"] },
+      { pregunta: "¿Cómo se dice 'escuchar' en inglés?", correcta: "Listen", opciones: ["Hear", "Listen", "Look"] },
+      { pregunta: "¿Cómo se dice 'beber' en inglés?", correcta: "Drink", opciones: ["Eat", "Drink", "Swallow"] },
+      { pregunta: "¿Cómo se dice 'caminar' en inglés?", correcta: "Walk", opciones: ["Run", "Walk", "Stand"] },
+      { pregunta: "¿Cómo se dice 'nadar' en inglés?", correcta: "Swim", opciones: ["Sink", "Swim", "Drown"] },
+      { pregunta: "¿Cómo se dice 'volar' en inglés?", correcta: "Fly", opciones: ["Fly", "Float", "Throw"] },
+      { pregunta: "¿Cómo se dice 'abrir' en inglés?", correcta: "Open", opciones: ["Open", "Break", "Push"] },
+      { pregunta: "¿Cómo se dice 'cerrar' en inglés?", correcta: "Close", opciones: ["Shut", "Close", "Hide"] },
+      { pregunta: "¿Cómo se dice 'jugar' en inglés?", correcta: "Play", opciones: ["Play", "Push", "Punch"] },
+      { pregunta: "¿Cómo se dice 'cocinar' en inglés?", correcta: "Cook", opciones: ["Cook", "Burn", "Cut"] },
+      { pregunta: "¿Cómo se dice 'estudiar' en inglés?", correcta: "Study", opciones: ["Study", "Read", "Write"] },
+      { pregunta: "¿Cómo se dice 'enseñar' en inglés?", correcta: "Teach", opciones: ["Teach", "Talk", "Tell"] },
+      { pregunta: "¿Cómo se dice 'mirar' en inglés?", correcta: "Watch", opciones: ["See", "Look", "Watch"] },
+      { pregunta: "¿Cómo se dice 'pensar' en inglés?", correcta: "Think", opciones: ["Know", "Guess", "Think"] }
+    ];
 
-    function checkAnswer3(user, correct) {
-      const r = document.getElementById("resultado3");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
+    const quizDiv = document.getElementById("quiz");
 
-    function checkAnswer4(user, correct) {
-      const r = document.getElementById("resultado4");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
+    preguntas.forEach((item, index) => {
+      const contenedor = document.createElement("div");
 
-    function checkAnswer5(user, correct) {
-      const r = document.getElementById("resultado5");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
+      const pregunta = document.createElement("p");
+      pregunta.innerHTML = `<strong>${index + 1}. ${item.pregunta}</strong>`;
+      contenedor.appendChild(pregunta);
+
+      item.opciones.forEach(opcion => {
+        const boton = document.createElement("button");
+        boton.textContent = opcion;
+        boton.onclick = function () {
+          const resultado = document.getElementById("resultado" + index);
+          if (!resultado.textContent) { // solo permite responder una vez
+            if (opcion === item.correcta) {
+              resultado.textContent = "¡Correcto!";
+              resultado.style.color = "green";
+              score++;
+            } else {
+              resultado.textContent = "Incorrecto. La respuesta correcta es: " + item.correcta + ".";
+              resultado.style.color = "red";
+            }
+            actualizarPuntaje();
+          }
+        };
+        contenedor.appendChild(boton);
+      });
+
+      const resultado = document.createElement("p");
+      resultado.id = "resultado" + index;
+      contenedor.appendChild(resultado);
+
+      quizDiv.appendChild(contenedor);
+    });
   </script>
 </body>
 </html>
-  function checkAnswer6(user, correct) {
-      const r = document.getElementById("resultado6");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer7(user, correct) {
-      const r = document.getElementById("resultado7");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer8(user, correct) {
-      const r = document.getElementById("resultado8");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer9(user, correct) {
-      const r = document.getElementById("resultado9");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer10(user, correct) {
-      const r = document.getElementById("resultado10");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-   <!-- Pregunta 11 -->
-  <p><strong>¿Cómo se dice "nadar" en inglés?</strong></p>
-  <button onclick="checkAnswer11('Sink', 'Swim')">Sink</button>
-  <button onclick="checkAnswer11('Swim', 'Swim')">Swim</button>
-  <button onclick="checkAnswer11('Drown', 'Swim')">Drown</button>
-  <p id="resultado11"></p>
-
-  <!-- Pregunta 12 -->
-  <p><strong>¿Cómo se dice "volar" en inglés?</strong></p>
-  <button onclick="checkAnswer12('Fly', 'Fly')">Fly</button>
-  <button onclick="checkAnswer12('Float', 'Fly')">Float</button>
-  <button onclick="checkAnswer12('Throw', 'Fly')">Throw</button>
-  <p id="resultado12"></p>
-
-  <!-- Pregunta 13 -->
-  <p><strong>¿Cómo se dice "abrir" en inglés?</strong></p>
-  <button onclick="checkAnswer13('Open', 'Open')">Open</button>
-  <button onclick="checkAnswer13('Break', 'Open')">Break</button>
-  <button onclick="checkAnswer13('Push', 'Open')">Push</button>
-  <p id="resultado13"></p>
-
-  <!-- Pregunta 14 -->
-  <p><strong>¿Cómo se dice "cerrar" en inglés?</strong></p>
-  <button onclick="checkAnswer14('Shut', 'Close')">Shut</button>
-  <button onclick="checkAnswer14('Close', 'Close')">Close</button>
-  <button onclick="checkAnswer14('Hide', 'Close')">Hide</button>
-  <p id="resultado14"></p>
-
-  <!-- Pregunta 15 -->
-  <p><strong>¿Cómo se dice "jugar" en inglés?</strong></p>
-  <button onclick="checkAnswer15('Play', 'Play')">Play</button>
-  <button onclick="checkAnswer15('Push', 'Play')">Push</button>
-  <button onclick="checkAnswer15('Punch', 'Play')">Punch</button>
-  <p id="resultado15"></p>
-  function checkAnswer11(user, correct) {
-      const r = document.getElementById("resultado11");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer12(user, correct) {
-      const r = document.getElementById("resultado12");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer13(user, correct) {
-      const r = document.getElementById("resultado13");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer14(user, correct) {
-      const r = document.getElementById("resultado14");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer15(user, correct) {
-      const r = document.getElementById("resultado15");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-      <!-- Pregunta 16 -->
-  <p><strong>¿Cómo se dice "cocinar" en inglés?</strong></p>
-  <button onclick="checkAnswer16('Cook', 'Cook')">Cook</button>
-  <button onclick="checkAnswer16('Cut', 'Cook')">Cut</button>
-  <button onclick="checkAnswer16('Boil', 'Cook')">Boil</button>
-  <p id="resultado16"></p>
-
-  <!-- Pregunta 17 -->
-  <p><strong>¿Cómo se dice "estudiar" en inglés?</strong></p>
-  <button onclick="checkAnswer17('Read', 'Study')">Read</button>
-  <button onclick="checkAnswer17('Study', 'Study')">Study</button>
-  <button onclick="checkAnswer17('Draw', 'Study')">Draw</button>
-  <p id="resultado17"></p>
-
-  <!-- Pregunta 18 -->
-  <p><strong>¿Cómo se dice "enseñar" en inglés?</strong></p>
-  <button onclick="checkAnswer18('Teach', 'Teach')">Teach</button>
-  <button onclick="checkAnswer18('Show', 'Teach')">Show</button>
-  <button onclick="checkAnswer18('Tell', 'Teach')">Tell</button>
-  <p id="resultado18"></p>
-
-  <!-- Pregunta 19 -->
-  <p><strong>¿Cómo se dice "mirar" en inglés?</strong></p>
-  <button onclick="checkAnswer19('Look', 'Watch')">Look</button>
-  <button onclick="checkAnswer19('See', 'Watch')">See</button>
-  <button onclick="checkAnswer19('Watch', 'Watch')">Watch</button>
-  <p id="resultado19"></p>
-
-  <!-- Pregunta 20 -->
-  <p><strong>¿Cómo se dice "pensar" en inglés?</strong></p>
-  <button onclick="checkAnswer20('Believe', 'Think')">Believe</button>
-  <button onclick="checkAnswer20('Think', 'Think')">Think</button>
-  <button onclick="checkAnswer20('Guess', 'Think')">Guess</button>
-  <p id="resultado20"></p>
-   function checkAnswer16(user, correct) {
-      const r = document.getElementById("resultado16");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer17(user, correct) {
-      const r = document.getElementById("resultado17");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer18(user, correct) {
-      const r = document.getElementById("resultado18");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer19(user, correct) {
-      const r = document.getElementById("resultado19");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-
-    function checkAnswer20(user, correct) {
-      const r = document.getElementById("resultado20");
-      r.textContent = user === correct ? "¡Correcto!" : "Incorrecto. La respuesta correcta es: " + correct + ".";
-      r.style.color = user === correct ? "green" : "red";
-    }
-    <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f6fc;
-    padding: 30px;
-    max-width: 800px;
-    margin: auto;
-  }
-
-  h1 {
-    color: #2c3e50;
-    text-align: center;
-  }
-
-  p {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-
-  button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-
-  button:hover {
-    background-color: #2980b9;
-  }
-
-  #resultado1, #resultado2, #resultado3, #resultado4, #resultado5,
-  #resultado6, #resultado7, #resultado8, #resultado9, #resultado10,
-  #resultado11, #resultado12, #resultado13, #resultado14, #resultado15,
-  #resultado16, #resultado17, #resultado18, #resultado19, #resultado20 {
-    font-weight: bold;
-    margin-bottom: 30px;
-  }
-</style>
