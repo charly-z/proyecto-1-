@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mi Página</title>
+  <meta charset="UTF-8">
+  <title>Mini Quiz</title>
 </head>
 <body>
-    <h1>¡Hola, mundo!</h1>
-    <p>Esta es mi primera página web.</p>
+  <h1>Mini Quiz en Inglés</h1>
+  <p><strong>¿Cómo se dice "correr" en inglés?</strong></p>
+  
+  <button onclick="checkAnswer('Rin')">Rin</button>
+  <button onclick="checkAnswer('Rak')">Rak</button>
+  <button onclick="checkAnswer('Run')">Run</button>
+  
+  <p id="resultado"></p>
+
+  <script>
+    function checkAnswer(respuesta) {
+      const resultado = document.getElementById("resultado");
+      if (respuesta === "Run") {
+        resultado.textContent = "¡Correcto!";
+        resultado.style.color = "green";
+      } else {
+        resultado.textContent = "Incorrecto. La respuesta correcta es: Run.";
+        resultado.style.color = "red";
+      }
+    }
+  </script>
 </body>
 </html>
