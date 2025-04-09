@@ -10,11 +10,12 @@
       padding: 30px;
       max-width: 800px;
       margin: auto;
+      display: none;
     }
 
-    h1 {
-      color: #2c3e50;
+    h1, h2 {
       text-align: center;
+      color: #2c3e50;
     }
 
     p {
@@ -37,40 +38,75 @@
       background-color: #2980b9;
     }
 
+    #startScreen, #quiz, #puntajeFinal {
+      display: none;
+    }
+
+    .visible {
+      display: block;
+    }
+
     p[id^="resultado"] {
       font-weight: bold;
       margin-bottom: 30px;
     }
-
-    h2#puntajeFinal {
-      text-align: center;
-      margin-top: 40px;
-      color: #2c3e50;
-    }
   </style>
 </head>
 <body>
-  <h1>Mini Examen de Verbos en Inglés</h1>
-
-  <div id="quiz">
-    <!-- Preguntas se generan aquí -->
+  <div id="startScreen" class="visible">
+    <h1>Examen de Verbos en Inglés</h1>
+    <p>Responde las 30 preguntas. ¡Cada acierto te motiva a seguir!</p>
+    <div style="text-align:center;">
+      <button onclick="iniciarExamen()">Comenzar Examen</button>
+    </div>
   </div>
 
-  <hr>
-  <h2 id="puntajeFinal"></h2>
+  <div id="quiz"></div>
 
-  <script>
+  <div id="finalScreen">
+    <h2 id="puntajeFinal"></h2>
+    <div style="text-align:center;">
+      <button onclick="reiniciarExamen()">Reiniciar Examen</button>
+    </div>
+  </div>
+
+<script>
     let score = 0;
-    let totalPreguntas = 20;
+    let totalPreguntas = 30;
     let respuestasContestadas = 0;
 
-    function actualizarPuntaje() {
-      respuestasContestadas++;
-      if (respuestasContestadas === totalPreguntas) {
-        document.getElementById("puntajeFinal").textContent =
-          "¡Examen completado! Obtuviste " + score + " de " + totalPreguntas + " respuestas correctas.";
-      }
-    }
+    const frasesMotivadoras = [
+      "¡Correcto! Cada vez estás más cerca de conseguir lo que quieres.",
+      "¡Bien hecho! Sigue esforzándote así y vas a lograr todo en la vida.",
+      "¡Excelente! Estás un paso más cerca de ser millonario.",
+      "¡Muy bien! Tu esfuerzo vale la pena.",
+      "¡Increíble! Tu constancia te está llevando lejos.",
+      "¡Eso es! Hoy estudias, mañana triunfas.",
+      "¡Perfecto! Sigue así, estás brillando.",
+      "¡Gran trabajo! Cada respuesta te hace más fuerte.",
+      "¡Súper! Tu mente se está entrenando como un campeón.",
+      "¡Lo lograste! Un día vas a dominar el inglés.",
+      "¡Muy bien! Vas mejorando como un profesional.",
+      "¡Excelente! Estás construyendo tu éxito.",
+      "¡Genial! Cada palabra aprendida es poder.",
+      "¡Fabuloso! Tu inteligencia es tu mejor herramienta.",
+      "¡Wow! Tu disciplina está rindiendo frutos.",
+      "¡Increíble trabajo! Te estás volviendo imparable.",
+      "¡Espectacular! ¡Eres más capaz de lo que crees!",
+      "¡Fantástico! Así se hace.",
+      "¡Eso es tener actitud ganadora!",
+      "¡Brillante! Eres una máquina de aprender.",
+      "¡Correcto! Vas directo al éxito.",
+      "¡Bien hecho! Estás desbloqueando tu potencial.",
+      "¡Maravilloso! El aprendizaje es tu superpoder.",
+      "¡Bravo! Estás más cerca de dominarlo todo.",
+      "¡Sí! Cada paso cuenta, y tú no te detienes.",
+      "¡Eres grande! Y cada acierto lo demuestra.",
+      "¡Imparable! No hay quien te pare.",
+      "¡Firme! Cada respuesta correcta es progreso.",
+      "¡Motivador! Tu energía es contagiosa.",
+      "¡Inspirador! Así se lucha por un objetivo."
+    ];
 
     const preguntas = [
       { pregunta: "¿Cómo se dice 'correr' en inglés?", correcta: "Run", opciones: ["Rin", "Rak", "Run"] },
@@ -92,44 +128,75 @@
       { pregunta: "¿Cómo se dice 'estudiar' en inglés?", correcta: "Study", opciones: ["Study", "Read", "Write"] },
       { pregunta: "¿Cómo se dice 'enseñar' en inglés?", correcta: "Teach", opciones: ["Teach", "Talk", "Tell"] },
       { pregunta: "¿Cómo se dice 'mirar' en inglés?", correcta: "Watch", opciones: ["See", "Look", "Watch"] },
-      { pregunta: "¿Cómo se dice 'pensar' en inglés?", correcta: "Think", opciones: ["Know", "Guess", "Think"] }
+      { pregunta: "¿Cómo se dice 'pensar' en inglés?", correcta: "Think", opciones: ["Know", "Guess", "Think"] },
+      { pregunta: "¿Cómo se dice 'luchar' en inglés?", correcta: "Fight", opciones: ["Fight", "Fly", "Fold"] },
+      { pregunta: "¿Cómo se dice 'empezar' en inglés?", correcta: "Begin", opciones: ["Bring", "Begin", "Break"] },
+      { pregunta: "¿Cómo se dice 'construir' en inglés?", correcta: "Build", opciones: ["Buy", "Build", "Bend"] },
+      { pregunta: "¿Cómo se dice 'romper' en inglés?", correcta: "Break", opciones: ["Bark", "Break", "Burn"] },
+      { pregunta: "¿Cómo se dice 'comprar' en inglés?", correcta: "Buy", opciones: ["Bring", "Buy", "Burn"] },
+      { pregunta: "¿Cómo se dice 'elegir' en inglés?", correcta: "Choose", opciones: ["Catch", "Choose", "Charge"] },
+      { pregunta: "¿Cómo se dice 'venir' en inglés?", correcta: "Come", opciones: ["Cut", "Come", "Climb"] },
+      { pregunta: "¿Cómo se dice 'dibujar' en inglés?", correcta: "Draw", opciones: ["Drop", "Drink", "Draw"] },
+      { pregunta: "¿Cómo se dice 'manejar' en inglés?", correcta: "Drive", opciones: ["Dive", "Drive", "Drag"] },
+      { pregunta: "¿Cómo se dice 'caer' en inglés?", correcta: "Fall", opciones: ["Feel", "Fall", "Fill"] }
     ];
 
-    const quizDiv = document.getElementById("quiz");
+    function iniciarExamen() {
+      document.body.style.display = "block";
+      document.getElementById("startScreen").style.display = "none";
+      document.getElementById("quiz").style.display = "block";
+      generarPreguntas();
+    }
 
-    preguntas.forEach((item, index) => {
-      const contenedor = document.createElement("div");
+    function generarPreguntas() {
+      const quizDiv = document.getElementById("quiz");
+      preguntas.forEach((item, index) => {
+        const contenedor = document.createElement("div");
 
-      const pregunta = document.createElement("p");
-      pregunta.innerHTML = `<strong>${index + 1}. ${item.pregunta}</strong>`;
-      contenedor.appendChild(pregunta);
+        const pregunta = document.createElement("p");
+        pregunta.innerHTML = `<strong>${index + 1}. ${item.pregunta}</strong>`;
+        contenedor.appendChild(pregunta);
 
-      item.opciones.forEach(opcion => {
-        const boton = document.createElement("button");
-        boton.textContent = opcion;
-        boton.onclick = function () {
-          const resultado = document.getElementById("resultado" + index);
-          if (!resultado.textContent) {
-            if (opcion === item.correcta) {
-              resultado.textContent = "¡Correcto!";
-              resultado.style.color = "green";
-              score++;
-            } else {
-              resultado.textContent = "Incorrecto. La respuesta correcta es: " + item.correcta + ".";
-              resultado.style.color = "red";
+        item.opciones.forEach(opcion => {
+          const boton = document.createElement("button");
+          boton.textContent = opcion;
+          boton.onclick = function () {
+            const resultado = document.getElementById("resultado" + index);
+            if (!resultado.textContent) {
+              if (opcion === item.correcta) {
+                resultado.textContent = frasesMotivadoras[index] || "¡Correcto!";
+                resultado.style.color = "green";
+                score++;
+              } else {
+                resultado.textContent = "Incorrecto. La respuesta correcta es: " + item.correcta + ".";
+                resultado.style.color = "red";
+              }
+              actualizarPuntaje();
             }
-            actualizarPuntaje();
-          }
-        };
-        contenedor.appendChild(boton);
+          };
+          contenedor.appendChild(boton);
+        });
+
+        const resultado = document.createElement("p");
+        resultado.id = "resultado" + index;
+        contenedor.appendChild(resultado);
+        quizDiv.appendChild(contenedor);
       });
+    }
 
-      const resultado = document.createElement("p");
-      resultado.id = "resultado" + index;
-      contenedor.appendChild(resultado);
+    function actualizarPuntaje() {
+      respuestasContestadas++;
+      if (respuestasContestadas === totalPreguntas) {
+        document.getElementById("quiz").style.display = "none";
+        document.getElementById("finalScreen").style.display = "block";
+        document.getElementById("puntajeFinal").textContent =
+          "¡Examen completado! Obtuviste " + score + " de " + totalPreguntas + " respuestas correctas.";
+      }
+    }
 
-      quizDiv.appendChild(contenedor);
-    });
-  </script>
+    function reiniciarExamen() {
+      location.reload();
+    }
+</script>
 </body>
 </html>
