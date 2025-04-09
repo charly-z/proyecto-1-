@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Examen de Verbos</title>
   <style>
     body {
@@ -11,84 +11,41 @@
       max-width: 800px;
       margin: auto;
     }
-
-    h1, h2 {
-      color: #2c3e50;
+    h1 {
       text-align: center;
+      color: #2c3e50;
     }
-
-    p {
-      font-size: 18px;
-      margin-bottom: 10px;
+    .pregunta {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
-    button {
+    .opciones button {
       background-color: #3498db;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 15px;
       margin: 5px;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
     }
-
-    button:hover {
+    .opciones button:hover {
       background-color: #2980b9;
     }
-
-    p[id^="resultado"] {
+    .resultado {
+      margin-top: 10px;
       font-weight: bold;
-      margin-bottom: 30px;
-    }
-
-    #pantallaFinal {
-      text-align: center;
-      margin-top: 40px;
-      color: #2c3e50;
-      font-size: 20px;
-    }
-
-    .invisible {
-      display: none;
-    }
-
-    .visible {
-      display: block;
     }
   </style>
 </head>
 <body>
   <h1>Mini Examen de Verbos en Inglés</h1>
-
-  <div id="quiz" class="invisible"></div>
-  <h2 id="pantallaFinal"></h2>
+  <div id="quiz"></div>
+  <h2 id="puntajeFinal"></h2>
 
   <script>
-    let score = 0;
-    let totalPreguntas = 30;
-    let respuestasContestadas = 0;
-
-    const frasesMotivadoras = [
-      "¡Cada vez estás más cerca de conseguir lo que quieres!",
-      "¡Vas por excelente camino!",
-      "¡Sigue así, lo estás haciendo increíble!",
-      "¡Estás muy cerca de ser un experto!",
-      "¡Sigue esforzándote y lograrás todo!",
-      "¡No te detengas, vas excelente!",
-      "¡Gran trabajo, sigue avanzando!",
-      "¡Impresionante! Sigue con ese ritmo.",
-      "¡Eres una estrella del inglés!",
-      "¡Wow! Eso estuvo genial."
-    ];
-
-    function actualizarPantallaFinal() {
-      if (respuestasContestadas === totalPreguntas) {
-        document.getElementById("pantallaFinal").textContent =
-          "¡Examen completado! Obtuviste " + score + " de " + totalPreguntas + " respuestas correctas.";
-      }
-    }
-
     const preguntas = [
       { pregunta: "¿Cómo se dice 'correr' en inglés?", correcta: "Run", opciones: ["Rin", "Rak", "Run"] },
       { pregunta: "¿Cómo se dice 'saltar' en inglés?", correcta: "Jump", opciones: ["Slip", "Jump", "Shake"] },
@@ -99,58 +56,69 @@
       { pregunta: "¿Cómo se dice 'abrir' en inglés?", correcta: "Open", opciones: ["Open", "Break", "Push"] },
       { pregunta: "¿Cómo se dice 'cerrar' en inglés?", correcta: "Close", opciones: ["Shut", "Close", "Hide"] },
       { pregunta: "¿Cómo se dice 'jugar' en inglés?", correcta: "Play", opciones: ["Play", "Push", "Punch"] },
-      { pregunta: "¿Cómo se dice 'cocinar' en inglés?", correcta: "Cook", opciones: ["Cook", "Cut", "Boil"] },
-      { pregunta: "¿Cómo se dice 'estudiar' en inglés?", correcta: "Study", opciones: ["Read", "Study", "Draw"] },
-      { pregunta: "¿Cómo se dice 'enseñar' en inglés?", correcta: "Teach", opciones: ["Teach", "Show", "Tell"] },
-      { pregunta: "¿Cómo se dice 'mirar' en inglés?", correcta: "Look", opciones: ["Look", "See", "Watch"] },
-      { pregunta: "¿Cómo se dice 'pensar' en inglés?", correcta: "Think", opciones: ["Believe", "Think", "Guess"] },
-      { pregunta: "¿Cómo se dice 'beber' en inglés?", correcta: "Drink", opciones: ["Eat", "Drink", "Swallow"] },
-      { pregunta: "¿Cómo se dice 'escuchar' en inglés?", correcta: "Listen", opciones: ["Hear", "Speak", "Listen"] },
-      { pregunta: "¿Cómo se dice 'escribir' en inglés?", correcta: "Write", opciones: ["Draw", "Read", "Write"] },
-      { pregunta: "¿Cómo se dice 'hablar' en inglés?", correcta: "Speak", opciones: ["Say", "Speak", "Talk"] },
-      { pregunta: "¿Cómo se dice 'trabajar' en inglés?", correcta: "Work", opciones: ["Run", "Work", "Try"] },
-      { pregunta: "¿Cómo se dice 'caminar' en inglés?", correcta: "Walk", opciones: ["Jump", "Walk", "Stand"] },
-      { pregunta: "¿Cómo se dice 'vivir' en inglés?", correcta: "Live", opciones: ["Love", "Live", "Life"] },
-      { pregunta: "¿Cómo se dice 'pensar' en inglés?", correcta: "Think", opciones: ["Feel", "Guess", "Think"] },
-      { pregunta: "¿Cómo se dice 'viajar' en inglés?", correcta: "Travel", opciones: ["Trip", "Travel", "Move"] },
-      { pregunta: "¿Cómo se dice 'nadar' en inglés?", correcta: "Swim", opciones: ["Sink", "Swim", "Drown"] },
-      { pregunta: "¿Cómo se dice 'ayudar' en inglés?", correcta: "Help", opciones: ["Help", "Heal", "Hold"] },
-      { pregunta: "¿Cómo se dice 'decidir' en inglés?", correcta: "Decide", opciones: ["Choose", "Pick", "Decide"] },
-      { pregunta: "¿Cómo se dice 'subir' en inglés?", correcta: "Climb", opciones: ["Climb", "Rise", "Fly"] },
-      { pregunta: "¿Cómo se dice 'caer' en inglés?", correcta: "Fall", opciones: ["Drop", "Fall", "Down"] },
-      { pregunta: "¿Cómo se dice 'olvidar' en inglés?", correcta: "Forget", opciones: ["Forget", "Miss", "Lose"] },
-      { pregunta: "¿Cómo se dice 'recordar' en inglés?", correcta: "Remember", opciones: ["Remember", "Remind", "Recall"] }
+      { pregunta: "¿Cómo se dice 'cocinar' en inglés?", correcta: "Cook", opciones: ["Cook", "Cut", "Boil"] }
     ];
 
-    const quizDiv = document.getElementById("quiz");
-    quizDiv.classList.remove("invisible");
-    quizDiv.classList.add("visible");
+    const frasesMotivadoras = [
+      "¡Sigue esforzándote y lograrás todo!",
+      "¡Wow! Eso estuvo genial.",
+      "¡Bien hecho, vas mejorando!",
+      "¡Estás más cerca de dominar el inglés!",
+      "¡Excelente! Vas por buen camino.",
+      "¡Cada paso te acerca a tu meta!",
+      "¡Muy bien! Sigue así.",
+      "¡Estás aprendiendo rápido!",
+      "¡Bravo! Vas súper bien.",
+      "¡Fantástico trabajo!"
+    ];
 
-    preguntas.forEach((item, index) => {
-      const p = document.createElement("p");
-      p.innerHTML = `<strong>${index + 1}. ${item.pregunta}</strong>`;
-      quizDiv.appendChild(p);
+    let score = 0;
+    let respondidas = 0;
 
-      item.opciones.forEach(opcion => {
-        const btn = document.createElement("button");
-        btn.textContent = opcion;
-        btn.onclick = () => {
-          const r = document.createElement("p");
-          if (opcion === item.correcta) {
-            r.textContent = "¡Correcto! " + frasesMotivadoras[Math.floor(Math.random() * frasesMotivadoras.length)];
-            r.style.color = "green";
+    const contenedor = document.getElementById("quiz");
+
+    preguntas.forEach((item, i) => {
+      const div = document.createElement("div");
+      div.className = "pregunta";
+
+      const titulo = document.createElement("p");
+      titulo.innerHTML = `<strong>${i + 1}. ${item.pregunta}</strong>`;
+      div.appendChild(titulo);
+
+      const opciones = document.createElement("div");
+      opciones.className = "opciones";
+
+      const resultado = document.createElement("div");
+      resultado.className = "resultado";
+
+      item.opciones.forEach(op => {
+        const boton = document.createElement("button");
+        boton.textContent = op;
+        boton.onclick = () => {
+          if (resultado.textContent !== "") return;
+
+          if (op === item.correcta) {
+            const frase = frasesMotivadoras[Math.floor(Math.random() * frasesMotivadoras.length)];
+            resultado.innerHTML = "¡Correcto! " + frase;
+            resultado.style.color = "green";
             score++;
           } else {
-            r.textContent = "Incorrecto. La respuesta correcta es: " + item.correcta;
-            r.style.color = "red";
+            resultado.innerHTML = `Incorrecto. La respuesta correcta es: ${item.correcta}`;
+            resultado.style.color = "red";
           }
-          quizDiv.insertBefore(r, quizDiv.children[(index + 1) * 2]);
-          respuestasContestadas++;
-          actualizarPantallaFinal();
-          btn.disabled = true;
+
+          Array.from(opciones.children).forEach(b => b.disabled = true);
+          respondidas++;
+          if (respondidas === preguntas.length) {
+            document.getElementById("puntajeFinal").textContent = `¡Examen completado! Obtuviste ${score} de ${preguntas.length} respuestas correctas.`;
+          }
         };
-        quizDiv.appendChild(btn);
+        opciones.appendChild(boton);
       });
+
+      div.appendChild(opciones);
+      div.appendChild(resultado);
+      contenedor.appendChild(div);
     });
   </script>
 </body>
