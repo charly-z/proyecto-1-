@@ -2,123 +2,96 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Examen de Verbos</title>
+  <title>Mini Examen de Verbos en Inglés</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f2f6fc;
+      background-color: #f2f0fc;
       padding: 30px;
       max-width: 800px;
       margin: auto;
     }
     h1 {
-      text-align: center;
       color: #2c3e50;
+      text-align: center;
     }
     .pregunta {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .opciones button {
+    .boton {
       background-color: #3498db;
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 10px 20px;
       margin: 5px;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 15px;
     }
-    .opciones button:hover {
+    .boton:hover {
       background-color: #2980b9;
     }
     .resultado {
-      margin-top: 10px;
       font-weight: bold;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <h1>Mini Examen de Verbos en Inglés</h1>
   <div id="quiz"></div>
-  <h2 id="puntajeFinal"></h2>
-
   <script>
+    const frasesMotivadoras = [
+      "¡Cada vez estás más cerca de conseguir lo que quieres!",
+      "¡Wow! Eso estuvo genial.",
+      "¡Eres una estrella del inglés!",
+      "¡Sigue esforzándote y lograrás todo!",
+      "¡Muy bien! Vas con todo.",
+      "¡Perfecto! Sigue así."
+    ];
+
     const preguntas = [
       { pregunta: "¿Cómo se dice 'correr' en inglés?", correcta: "Run", opciones: ["Rin", "Rak", "Run"] },
       { pregunta: "¿Cómo se dice 'saltar' en inglés?", correcta: "Jump", opciones: ["Slip", "Jump", "Shake"] },
       { pregunta: "¿Cómo se dice 'comer' en inglés?", correcta: "Eat", opciones: ["Come", "Eat", "Hit"] },
       { pregunta: "¿Cómo se dice 'dormir' en inglés?", correcta: "Sleep", opciones: ["Rest", "Sleep", "Sit"] },
       { pregunta: "¿Cómo se dice 'leer' en inglés?", correcta: "Read", opciones: ["Ride", "Read", "Red"] },
-      { pregunta: "¿Cómo se dice 'volar' en inglés?", correcta: "Fly", opciones: ["Fly", "Float", "Throw"] },
-      { pregunta: "¿Cómo se dice 'abrir' en inglés?", correcta: "Open", opciones: ["Open", "Break", "Push"] },
-      { pregunta: "¿Cómo se dice 'cerrar' en inglés?", correcta: "Close", opciones: ["Shut", "Close", "Hide"] },
-      { pregunta: "¿Cómo se dice 'jugar' en inglés?", correcta: "Play", opciones: ["Play", "Push", "Punch"] },
-      { pregunta: "¿Cómo se dice 'cocinar' en inglés?", correcta: "Cook", opciones: ["Cook", "Cut", "Boil"] }
+      { pregunta: "¿Cómo se dice 'volar' en inglés?", correcta: "Fly", opciones: ["Fly", "Float", "Throw"] }
     ];
 
-    const frasesMotivadoras = [
-      "¡Sigue esforzándote y lograrás todo!",
-      "¡Wow! Eso estuvo genial.",
-      "¡Bien hecho, vas mejorando!",
-      "¡Estás más cerca de dominar el inglés!",
-      "¡Excelente! Vas por buen camino.",
-      "¡Cada paso te acerca a tu meta!",
-      "¡Muy bien! Sigue así.",
-      "¡Estás aprendiendo rápido!",
-      "¡Bravo! Vas súper bien.",
-      "¡Fantástico trabajo!"
-    ];
+    const quizDiv = document.getElementById("quiz");
 
-    let score = 0;
-    let respondidas = 0;
-
-    const contenedor = document.getElementById("quiz");
-
-    preguntas.forEach((item, i) => {
+    preguntas.forEach((item, index) => {
       const div = document.createElement("div");
-      div.className = "pregunta";
+      div.classList.add("pregunta");
 
-      const titulo = document.createElement("p");
-      titulo.innerHTML = `<strong>${i + 1}. ${item.pregunta}</strong>`;
-      div.appendChild(titulo);
-
-      const opciones = document.createElement("div");
-      opciones.className = "opciones";
+      const p = document.createElement("p");
+      p.innerHTML = `<strong>${index + 1}. ${item.pregunta}</strong>`;
+      div.appendChild(p);
 
       const resultado = document.createElement("div");
-      resultado.className = "resultado";
+      resultado.classList.add("resultado");
+      resultado.id = "resultado" + index;
 
-      item.opciones.forEach(op => {
-        const boton = document.createElement("button");
-        boton.textContent = op;
-        boton.onclick = () => {
-          if (resultado.textContent !== "") return;
-
-          if (op === item.correcta) {
-            const frase = frasesMotivadoras[Math.floor(Math.random() * frasesMotivadoras.length)];
-            resultado.innerHTML = "¡Correcto! " + frase;
-            resultado.style.color = "green";
-            score++;
+      item.opciones.forEach(opcion => {
+        const btn = document.createElement("button");
+        btn.classList.add("boton");
+        btn.textContent = opcion;
+        btn.onclick = () => {
+          const r = document.getElementById("resultado" + index);
+          if (opcion === item.correcta) {
+            r.innerHTML = "¡Correcto! " + frasesMotivadoras[Math.floor(Math.random() * frasesMotivadoras.length)];
+            r.style.color = "green";
           } else {
-            resultado.innerHTML = `Incorrecto. La respuesta correcta es: ${item.correcta}`;
-            resultado.style.color = "red";
-          }
-
-          Array.from(opciones.children).forEach(b => b.disabled = true);
-          respondidas++;
-          if (respondidas === preguntas.length) {
-            document.getElementById("puntajeFinal").textContent = `¡Examen completado! Obtuviste ${score} de ${preguntas.length} respuestas correctas.`;
+            r.innerHTML = "Incorrecto. La respuesta correcta es: " + item.correcta;
+            r.style.color = "red";
           }
         };
-        opciones.appendChild(boton);
+        div.appendChild(btn);
       });
 
-      div.appendChild(opciones);
       div.appendChild(resultado);
-      contenedor.appendChild(div);
+      quizDiv.appendChild(div);
     });
   </script>
 </body>
